@@ -1,6 +1,6 @@
 ﻿namespace GameChallenge.Web.Model
 {
-    public class CustomerModel
+    public class PlayerModel
     {
         public string Name { get; set; }
     }

@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace GameChallenge.Core.DBEntities
 {
-    public class Customer : BaseEntity
+    public class Player : BaseEntity
     {
         [MaxLength(500)]
         public string Name { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }        
         [MaxLength(200)]
         public string ApplicationUserId { get; set; }
-        public virtual List<Order> Orders { get; set; }
+        public List<PlayerBet> PlayerBets { get; set; }
     }
 }

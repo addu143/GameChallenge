@@ -1,6 +1,7 @@
-﻿using GameChallenge.Core.DBEntities;
+﻿
+using GameChallenge.Core.DBEntities;
 
-namespace GameChallenge.Web.Helpers
+namespace GameChallenge.Common.Helpers
 {
     public interface IResponseGeneric
     {

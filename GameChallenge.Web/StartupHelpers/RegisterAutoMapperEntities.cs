@@ -9,19 +9,7 @@ namespace GameChallenge.Web
     {
         public RegisterAutoMapperEntities()
         {
-            CreateMap<Customer, CustomerModel>();
-            CreateMap<CreateProductCategoryRequest, ProductCategory>();
-            CreateMap<CreateProductRequest, Product>();
-            CreateMap<Product, ProductResponse>();
-            CreateMap<ProductCategory, ProductCategoryResponse>();
-            CreateMap<UpdateProductRequest, Product>();
-
-            CreateMap<Order, OrderListResponse>();
-            CreateMap<Order, OrderDetailResponse> ();
-            CreateMap<OrderItem, OrderItemResponse>();
-
-
-
+            CreateMap<Player, PlayerModel>();
         }
     }
 

@@ -19,12 +19,10 @@ namespace GameChallenge.Infrastructure.Data
         {
         }
 
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<ProductCategory> ProductCategories { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Player> Players { get; set; }
         public DbSet<Log> Logs { get; set; }
+        public DbSet<PlayerBet> PlayerBets { get; set; }
+        public DbSet<Setting> Settings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

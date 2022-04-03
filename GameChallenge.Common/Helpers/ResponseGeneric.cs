@@ -2,7 +2,7 @@
 using System;
 using System.Net;
 
-namespace GameChallenge.Web.Helpers
+namespace GameChallenge.Common.Helpers
 {
     public class ResponseGeneric : IResponseGeneric
     {

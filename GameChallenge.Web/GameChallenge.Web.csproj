@@ -24,8 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ReadingIsGood.Core\GameChallenge.Core.csproj" />
-    <ProjectReference Include="..\ReadingIsGood.Infrastructure\GameChallenge.Infrastructure.csproj" />
+    <ProjectReference Include="..\GameChallenge.Common\GameChallenge.Common.csproj" />
+    <ProjectReference Include="..\GameChallenge.Core\GameChallenge.Core.csproj" />
+    <ProjectReference Include="..\GameChallenge.Infrastructure\GameChallenge.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -19,7 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ReadingIsGood.Core\GameChallenge.Core.csproj" />
+    <ProjectReference Include="..\GameChallenge.Core\GameChallenge.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using GameChallenge.Core.DBEntities;
 using GameChallenge.Core.Interfaces;
-using GameChallenge.Web.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using GameChallenge.Common.Helpers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

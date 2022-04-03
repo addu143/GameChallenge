@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GameChallenge.Core.Interfaces
 {
-    public interface ICustomerService
+    public interface IPlayerService
     {
         Task<ApplicationUser> FindByEmailAsync(string email, CancellationToken cancellationToken = default);
 
@@ -20,8 +20,12 @@ namespace GameChallenge.Core.Interfaces
 
         Task<IdentityResult> CreateAsync(ApplicationUser applicationUser, string password);
 
-        Task<Customer> AddAsync(Customer customer, CancellationToken cancellationToken = default);
+        Task<Player> AddAsync(Player player, CancellationToken cancellationToken = default);
 
-        Task<List<Customer>> ListOfCustomersAsync(CancellationToken cancellationToken = default);
+        Task UpdateAsync(Player player, CancellationToken cancellationToken = default);
+
+        Task<List<Player>> ListsAsync(CancellationToken cancellationToken = default);
+
+
     }
 }

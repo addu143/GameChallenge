@@ -11,6 +11,6 @@ namespace GameChallenge.Core.DBEntities.Authentication
     public class ApplicationUser : IdentityUser
     {
         [Required]
-        public virtual Customer Customer { get; set; }
+        public virtual Player Player { get; set; }
     }
 }
