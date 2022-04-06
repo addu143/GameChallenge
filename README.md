@@ -30,8 +30,8 @@ and later we can change the database e.g. EF/SQL to any other DB provider, and c
 4. User will pass the token and can see his/her available points /api/Player/availablePoints
 
 ## Settings table, configure the gaming settings:
-User can configure the following settings from the dbo.Settings table: Current settings are follows:
-Challenge.RandomNumberMin -> Random minimum number in a challenge
-Challenge.RandomNumberMax -> Random maximum number in a challenge
-Challenge.RewardHowManyTimes -> e.g. If he is right, he gets 9 times his stake as a prize
-User.DefaultPoints -> Default points for a new user.
+User can configure the following settings from the dbo.Settings table: Current settings are follows:<br>
+Challenge.RandomNumberMin -> Random minimum number in a challenge<br>
+Challenge.RandomNumberMax -> Random maximum number in a challenge<br>
+Challenge.RewardHowManyTimes -> e.g. If he is right, he gets 9 times his stake as a prize<br>
+User.DefaultPoints -> Default points for a new user.<br>
