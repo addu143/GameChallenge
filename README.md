@@ -28,10 +28,10 @@ and later we can change the database e.g. EF/SQL to any other DB provider, and c
 2. User will login using the email and password and get the token on /api/Player/login <br>
 3. User will pass the token, and can have the challenge /api/Player/challenge <br>
 4. User will pass the token and can see his/her available points /api/Player/availablePoints
-5. User will pass the token, and Order number and can see details of an Order https://readingisgood.azurewebsites.net/api/Order/getCustomerOrderDetail <br>
-6. User will pass the token and can update any Product https://readingisgood.azurewebsites.net/api/Product/updateProduct <br>
-7. User will get all the Products available https://readingisgood.azurewebsites.net/api/Product/getProducts <br>
-8. User can see the Logs without authentication at https://readingisgood.azurewebsites.net/api/Log/getAll
-### All Request/Request schemas can be accessible on: https://readingisgood.azurewebsites.net/swagger/index.html
 
-
+## Settings table, configure the gaming settings:
+User can configure the following settings from the dbo.Settings table: Current settings are follows:<br>
+Challenge.RandomNumberMin -> Random minimum number in a challenge<br>
+Challenge.RandomNumberMax -> Random maximum number in a challenge<br>
+Challenge.RewardHowManyTimes -> e.g. If he is right, he gets 9 times his stake as a prize<br>
+User.DefaultPoints -> Default points for a new user.<br>
