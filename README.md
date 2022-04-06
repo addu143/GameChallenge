@@ -26,8 +26,8 @@ and later we can change the database e.g. EF/SQL to any other DB provider, and c
 1. For the sake of this project, Logging is open endpoint to see what is happening.
 1. User will Register using the /api/Player/register and get the 10000 points<br>
 2. User will login using the email and password and get the token on /api/Player/login <br>
-3. User will pass the token, and can have the challenge /api/Player/challenge <br>
-4. User will pass the token and can see his/her available points /api/Player/availablePoints
+3. User will pass the token, and can have the challenge /api/Player/challenge (With SwaggerUI, You can set the Bearer token and can access the challenge)
+4. User will pass the token and can see his/her available points /api/Player/availablePoints  (With SwaggerUI, You can set the Bearer token and can access the challenge)
 
 ## Settings table, configure the gaming settings:
 User can configure the following settings from the dbo.Settings table: Current settings are follows:<br>
