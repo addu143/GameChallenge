@@ -1,14 +1,14 @@
-# ReadingIsGood-DotNETApplication
+# GameChallenge-DotNETApplication
 
-Simple online books web api app
+GameChallenge Application
+
+## How to run the application
+Just run the application, everything configured e.g. data-migration etc.
 
 ## Brief explanation of Design <br><br>
 This application build on the Clean Architecture, hence its layers are loosely copuples and can be tested independendly. 
 and later we can change the database e.g. EF/SQL to any other DB provider, and can take advantages of other benefits.
-**Application is containerized and deployed on Docker Hub and consume using the Azure Services.**
-
-## Concurrency check
-Concurrency check has implemented while managing the Stock.
+**Application is containerized and later can deployed on Docker Hub and consume using the Azure Services.**
 
 
 ## TechStack <br><br>
@@ -20,17 +20,14 @@ Concurrency check has implemented while managing the Stock.
 6. AutoMapper
 7. Swagger
 8. Custom DB logging
-
-## Access Endpoints
-Application is deployed on Azure on the following link and APIs can be tested on. <br> But you need to Register first and get a token to access other APIs endpoints :)
-**You can access the Logging endpoint (without authentication) anytime and see what is happening behind the scenes**
-https://readingisgood.azurewebsites.net/swagger/index.html
+9. xUnit and Moq Integration and Unit Testing
 
 ## Application Flow
-1. User will Register using the https://readingisgood.azurewebsites.net/api/Customer/register <br>
-2. User will login using the email and password and get the token on https://readingisgood.azurewebsites.net/api/Customer/login <br>
-3. User will pass the token, Order details and create the Order on https://readingisgood.azurewebsites.net/api/Order/create <br>
-4. User will pass the token and can see his/her Order listing https://readingisgood.azurewebsites.net/api/Order/getCustomerOrders
+1. For the sake of this project, Logging is open endpoint to see what is happening.
+1. User will Register using the /api/Player/register and get the 10000 points<br>
+2. User will login using the email and password and get the token on /api/Player/login <br>
+3. User will pass the token, and can have the challenge /api/Player/challenge <br>
+4. User will pass the token and can see his/her available points /api/Player/availablePoints
 5. User will pass the token, and Order number and can see details of an Order https://readingisgood.azurewebsites.net/api/Order/getCustomerOrderDetail <br>
 6. User will pass the token and can update any Product https://readingisgood.azurewebsites.net/api/Product/updateProduct <br>
 7. User will get all the Products available https://readingisgood.azurewebsites.net/api/Product/getProducts <br>

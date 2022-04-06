@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameChallenge.Infrastructure.Migrations
 {
     [DbContext(typeof(GameChallengeDBContext))]
-    [Migration("20220403064728_PlayerBetstable12")]
-    partial class PlayerBetstable12
+    [Migration("20220406054944_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -179,6 +179,36 @@ namespace GameChallenge.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Settings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Random minimum number in a challenge",
+                            Name = "Challenge.RandomNumberMin",
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Random maximum number in a challenge",
+                            Name = "Challenge.RandomNumberMax",
+                            Value = "9"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "e.g. If he is right, he gets 9 times his stake as a prize",
+                            Name = "Challenge.RewardHowManyTimes",
+                            Value = "9"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Default points for a new user.",
+                            Name = "User.DefaultPoints",
+                            Value = "10000"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

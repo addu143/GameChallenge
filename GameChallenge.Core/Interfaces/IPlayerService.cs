@@ -20,11 +20,15 @@ namespace GameChallenge.Core.Interfaces
 
         Task<IdentityResult> CreateAsync(ApplicationUser applicationUser, string password);
 
+        Task<IdentityResult> CreateCustomAsync(ApplicationUser applicationUser, string password);
+
         Task<Player> AddAsync(Player player, CancellationToken cancellationToken = default);
 
         Task UpdateAsync(Player player, CancellationToken cancellationToken = default);
 
         Task<List<Player>> ListsAsync(CancellationToken cancellationToken = default);
+
+        Task AddPoints(Player player, int points, string comment = "", CancellationToken cancellationToken = default);
 
 
     }

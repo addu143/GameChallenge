@@ -23,6 +23,7 @@ namespace GameChallenge.Core.Services
         {
             return _repository.Table.Where(m => m.Name == name).FirstOrDefaultAsync(cancellationToken);
         }
+
         public async Task<List<Setting>> ListOfSettingsAsync(CancellationToken cancellationToken = default)
         {
             return await _repository.ListAsync(cancellationToken);

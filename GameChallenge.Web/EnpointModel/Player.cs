@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace GameChallenge.Web.EnpointModel
@@ -22,6 +23,13 @@ namespace GameChallenge.Web.EnpointModel
 
         [MinLength(6)]
         public string Password { get; set; }
+    }
+
+    public class PlayerLoginResponse
+    {
+        public string Token { get; set; }
+
+        public DateTime ValidTo { get; set; }
     }
 
     public class PlayerChallengeRequest

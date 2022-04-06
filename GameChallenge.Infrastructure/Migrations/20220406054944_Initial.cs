@@ -65,6 +65,21 @@ namespace GameChallenge.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Settings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    Value = table.Column<string>(type: "TEXT", nullable: true),
+                    Description = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Settings", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -190,6 +205,49 @@ namespace GameChallenge.Infrastructure.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PlayerBets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    RandomNumberByUser = table.Column<int>(type: "INTEGER", nullable: false),
+                    RandomNumberBySystem = table.Column<int>(type: "INTEGER", nullable: false),
+                    Amount = table.Column<double>(type: "REAL", nullable: false),
+                    Comment = table.Column<string>(type: "TEXT", nullable: true),
+                    PlayerId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlayerBets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PlayerBets_Players_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "Players",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Settings",
+                columns: new[] { "Id", "Description", "Name", "Value" },
+                values: new object[] { 1, "Random minimum number in a challenge", "Challenge.RandomNumberMin", "0" });
+
+            migrationBuilder.InsertData(
+                table: "Settings",
+                columns: new[] { "Id", "Description", "Name", "Value" },
+                values: new object[] { 2, "Random maximum number in a challenge", "Challenge.RandomNumberMax", "9" });
+
+            migrationBuilder.InsertData(
+                table: "Settings",
+                columns: new[] { "Id", "Description", "Name", "Value" },
+                values: new object[] { 3, "e.g. If he is right, he gets 9 times his stake as a prize", "Challenge.RewardHowManyTimes", "9" });
+
+            migrationBuilder.InsertData(
+                table: "Settings",
+                columns: new[] { "Id", "Description", "Name", "Value" },
+                values: new object[] { 4, "Default points for a new user.", "User.DefaultPoints", "10000" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -228,6 +286,11 @@ namespace GameChallenge.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_PlayerBets_PlayerId",
+                table: "PlayerBets",
+                column: "PlayerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Players_ApplicationUserId",
                 table: "Players",
                 column: "ApplicationUserId",
@@ -255,10 +318,16 @@ namespace GameChallenge.Infrastructure.Migrations
                 name: "Logs");
 
             migrationBuilder.DropTable(
-                name: "Players");
+                name: "PlayerBets");
+
+            migrationBuilder.DropTable(
+                name: "Settings");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Players");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

@@ -183,22 +183,29 @@ namespace GameChallenge.Infrastructure.Migrations
                         {
                             Id = 1,
                             Description = "Random minimum number in a challenge",
-                            Name = "RandomNumberMin",
+                            Name = "Challenge.RandomNumberMin",
                             Value = "0"
                         },
                         new
                         {
                             Id = 2,
                             Description = "Random maximum number in a challenge",
-                            Name = "RandomNumberMax",
+                            Name = "Challenge.RandomNumberMax",
                             Value = "9"
                         },
                         new
                         {
                             Id = 3,
                             Description = "e.g. If he is right, he gets 9 times his stake as a prize",
-                            Name = "RewardHowManyTimes",
+                            Name = "Challenge.RewardHowManyTimes",
                             Value = "9"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Default points for a new user.",
+                            Name = "User.DefaultPoints",
+                            Value = "10000"
                         });
                 });
 

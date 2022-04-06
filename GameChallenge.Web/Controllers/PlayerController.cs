@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Authorization;
 using GameChallenge.Common.Helpers;
 using GameChallenge.Common.Numbers;
 using System.Linq;
+using GameChallenge.Core.Enum;
 
 namespace GameChallenge.Web.Controllers
 {
@@ -82,7 +83,7 @@ namespace GameChallenge.Web.Controllers
                         SecurityStamp = Guid.NewGuid().ToString()
                     };
 
-                    var result = await _playerService.CreateAsync(user, cusModel.Password);
+                    var result = await _playerService.CreateCustomAsync(user, cusModel.Password);
                     if (!result.Succeeded)
                     {
                         List<string> errors = new List<string>();
@@ -97,25 +98,11 @@ namespace GameChallenge.Web.Controllers
                         return BadRequest(_responseGeneric.Error(result: errors));
                     }
 
-                    //Create an entry in Customer Table along with ASPNET Identity tables:
-
-                    //Creating by default 10000 points for a new user:
-                    var playerBets = new List<PlayerBet>();
-                    playerBets.Add(new PlayerBet() { Comment = "Default points/money on registration", Amount = 10000 });
-                    await _playerService.AddAsync(new Player()
-                    {
-                        ApplicationUser = user,
-                        Name = cusModel.Name,
-                        PlayerBets = playerBets
-                    });
-
                     //Logging
                     await _logService.InsertLog(LogLevel.Information, "Registering Success User", JsonSerializer.Serialize(cusModel));
 
                     return Ok(_responseGeneric.Success());
                     #endregion
-
-                    
                 }
                 else
                 {
@@ -161,10 +148,10 @@ namespace GameChallenge.Web.Controllers
                         signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                         );
 
-                    return Ok(_responseGeneric.Success(result: new
+                    return Ok(_responseGeneric.Success(result: new PlayerLoginResponse()
                     {
-                        token = new JwtSecurityTokenHandler().WriteToken(token),
-                        expiration = token.ValidTo
+                        Token = new JwtSecurityTokenHandler().WriteToken(token),
+                        ValidTo = token.ValidTo
                     }));
                 }
                 return Unauthorized(_responseGeneric.Error("Wrong credentials"));
@@ -186,16 +173,22 @@ namespace GameChallenge.Web.Controllers
             try
             {
                 #region BASIC DATA and VALIDATIONS
+                
+                //Getting the current logged in user
                 var currentPlayer = _workContext.CurrentPlayer.Player;
+
+                //Available points by the current user:
                 int availablePoints = _playerCalculation.AvailablePoints(currentPlayer);
 
-                //Getting data from settings table:
+                //Getting data from settings table: It should be in cache or similar,
+                //but for now its getting it from database and query from IN MEMORY data:
                 List<Setting> listOfSettings = await _settingService.ListOfSettingsAsync();
-                int randomNumberMinDb = Convert.ToInt32(listOfSettings.Find(m => m.Name == "RandomNumberMin").Value);
-                int randomNumberMaxDb = Convert.ToInt32(listOfSettings.Find(m => m.Name == "RandomNumberMax").Value);
-                int rewardIncreaseByTimes = Convert.ToInt32(listOfSettings.Find(m => m.Name == "RewardHowManyTimes").Value);
+                int randomNumberMinDb = GetSettingValue(listOfSettings, SettingsNames.Challenge_RandomNumberMin);
+                int randomNumberMaxDb = GetSettingValue(listOfSettings, SettingsNames.Challenge_RandomNumberMax);
+                int rewardIncreaseByTimes = GetSettingValue(listOfSettings, SettingsNames.Challenge_RewardHowManyTimes); 
                 /////
 
+                //VALIDATIONS
                 if (availablePoints <= 0)
                 {
                     return BadRequest(_responseGeneric.Error("You are out of funds"));
@@ -211,12 +204,16 @@ namespace GameChallenge.Web.Controllers
                 #endregion
 
                 #region OPERATIONS
+                //Generate Random value
                 int randomNumberBySystem = _numberHelper.GenerateRandomNumber(0, 10);
+                
+                //Match the Random number with player's number and return points gain in + or -
                 int pointsGain = _playerCalculation.Challenge(randomNumberBySystem,
                     challengeRequest.Points,
                     challengeRequest.Number,
                     rewardIncreaseByTimes);
 
+                //Setting up data and save it into the database
                 PlayerBet bet = new PlayerBet()
                 {
                     RandomNumberByUser = challengeRequest.Number,
@@ -226,10 +223,9 @@ namespace GameChallenge.Web.Controllers
                     Amount = pointsGain,
                 };
                 currentPlayer.PlayerBets.Add(bet);
-
-                //Update,Save to Database:
                 await _playerService.UpdateAsync(currentPlayer);
 
+                //Returning Result
                 return Ok(_responseGeneric.Success(result: new PlayerChallengeResponse()
                 {
                     PlayerEmail = _workContext.CurrentPlayer.Email,
@@ -271,6 +267,12 @@ namespace GameChallenge.Web.Controllers
             }
           
         }
+
+        private static int GetSettingValue(List<Setting> listOfSettings, string name)
+        {
+            return Convert.ToInt32(listOfSettings.Find(m => m.Name == name).Value);
+        }
+
 
     }
 }

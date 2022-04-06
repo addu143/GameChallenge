@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using GameChallenge.Core.Enum;
 
 namespace GameChallenge.Core.Services
 {
@@ -17,12 +18,15 @@ namespace GameChallenge.Core.Services
     {
         private IRepository<Player> _repository;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ISettingService _settingService;
 
         public PlayerService(IRepository<Player> repository,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            ISettingService settingService)
         {
             _repository = repository;
             _userManager = userManager;
+            _settingService = settingService;
         }
 
         public async Task<bool> CheckPasswordAsync(ApplicationUser applicationUser, string password)
@@ -33,6 +37,39 @@ namespace GameChallenge.Core.Services
         public async Task<IdentityResult> CreateAsync(ApplicationUser applicationUser, string password)
         {
             return await _userManager.CreateAsync(applicationUser, password);
+        }
+
+        public async Task<IdentityResult> CreateCustomAsync(ApplicationUser applicationUser, string password)
+        {
+            var result = await _userManager.CreateAsync(applicationUser, password);
+
+            if (result.Succeeded)
+            {
+                //Creating by default 10000 points for a new user:
+                Setting defaultPointsForNewUser = await _settingService.GetByNameAsync(SettingsNames.User_DefaultPoints);
+
+                var player = new Player()
+                {
+                    ApplicationUser = applicationUser,
+                    Name = applicationUser.Email                
+                };
+
+                await AddPoints(player, Convert.ToInt32(defaultPointsForNewUser.Value), "Default points/money on registration");
+                await AddAsync(player);
+
+            }
+            return result;
+        }
+
+        public async Task AddPoints(Player player, int points, string comment = "", CancellationToken cancellationToken = default)
+        {
+            if (player.PlayerBets == null) player.PlayerBets = new List<PlayerBet>();
+            player.PlayerBets.Add(new PlayerBet()
+            {
+                Player = player,
+                Comment = comment,                
+                Amount = points
+            });            
         }
 
         public async Task<ApplicationUser> FindByNameAsync(string userName)
